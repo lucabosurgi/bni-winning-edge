@@ -67,6 +67,17 @@ export default function RootLayout({
               © {new Date().getFullYear()} BNI Winning Edge. Member logos and
               photos are used with permission.
             </p>
+            <p className="mt-2">
+              Design &amp; development by{" "}
+              <a
+                href="https://lucabosurgi.com/mind-fitness-lab-design-and-development/"
+                target="_blank"
+                rel="noopener"
+                className="font-medium text-brand hover:underline"
+              >
+                Mind Fitness Lab
+              </a>
+            </p>
           </div>
         </footer>
       </body>

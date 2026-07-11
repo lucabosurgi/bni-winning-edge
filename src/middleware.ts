@@ -17,7 +17,7 @@ export function middleware(req: NextRequest) {
   return new NextResponse("Private preview — password required.", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="BNI Winning Edge — private preview", charset="UTF-8"',
+      "WWW-Authenticate": 'Basic realm="BNI Winning Edge Private Preview"',
     },
   });
 }

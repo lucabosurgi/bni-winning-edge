@@ -18,13 +18,12 @@ export default async function HomePage() {
             <br className="hidden sm:block" /> of Spring Hill business.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-slate-600">
-            BNI Winning Edge is a hand-picked team of the area&apos;s finest
-            local professionals — vetted for craftsmanship, fair pricing, and
-            integ. Every member puts their own name and reputation on the
-            line for the businesses they refer, so you get the best service at
-            the best price, backed by the trust of the entire group. Browse the
-            directory, or ask our concierge and we&apos;ll match you with exactly
-            the right pro.
+            BNI Winning Edge is a hand-picked team of the area&apos;s finest local
+            professionals — vetted for craftsmanship, fair pricing, and integrity. Every
+            member puts their own name and reputation on the line for the businesses they
+            refer, so you get the best service at the best price, backed by the trust of
+            the entire group. Browse the directory, or ask our concierge and we&apos;ll
+            match you with exactly the right pro.
           </p>
           <div className="mt-8 flex justify-center gap-3">
             <a

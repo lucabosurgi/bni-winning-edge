@@ -27,13 +27,13 @@ export default async function HomePage() {
             the right pro.
           </p>
           <div className="mt-8 flex justify-center gap-3">
-            
+            <a
               href="#directory"
               className="rounded-lg bg-brand px-6 py-3 font-medium text-white transition hover:bg-brand-dark"
             >
               Browse the directory
             </a>
-            
+            <a
               href="#directory"
               className="rounded-lg bg-white px-6 py-3 font-medium text-brand ring-1 ring-brand/30 transition hover:ring-brand"
             >

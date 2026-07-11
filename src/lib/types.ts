@@ -10,6 +10,11 @@ export type Member = {
   website: string | null;
   logo_url: string | null;
   photo_url: string | null;
+  review_rating: number | null;
+  review_count: number | null;
+  review_source: string | null;
+  review_url: string | null;
+  review_quote: string | null;
   published: boolean;
   approved: boolean;
   created_at: string;

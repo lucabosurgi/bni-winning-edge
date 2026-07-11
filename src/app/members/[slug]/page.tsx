@@ -35,6 +35,17 @@ function cleanUrl(url: string) {
   return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 }
 
+function ReviewStars({ rating }: { rating: number }) {
+  const filled = Math.round(rating);
+  return (
+    <span className="inline-flex text-amber-400" aria-hidden="true">
+      {Array.from({ length: 5 }, (_, i) => (
+        <span key={i}>{i < filled ? "★" : "☆"}</span>
+      ))}
+    </span>
+  );
+}
+
 export default async function MemberPage({
   params,
 }: {
@@ -119,6 +130,50 @@ export default async function MemberPage({
       </section>
 
       <div className="mx-auto max-w-3xl px-4 py-10">
+        {member.review_rating != null && (
+          <div className="mb-8">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+              <ReviewStars rating={member.review_rating} />
+              <span className="font-semibold text-brand-ink">
+                {member.review_rating.toFixed(1)}
+              </span>
+              {(member.review_count != null || member.review_source) && (
+                <span className="text-slate-500">
+                  {[
+                    member.review_count != null
+                      ? member.review_count.toLocaleString()
+                      : null,
+                    member.review_source,
+                    member.review_source &&
+                    !/review/i.test(member.review_source)
+                      ? "reviews"
+                      : !member.review_source
+                        ? "reviews"
+                        : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                </span>
+              )}
+              {member.review_url && (
+                <a
+                  href={member.review_url}
+                  target="_blank"
+                  rel="noopener"
+                  className="font-medium text-brand hover:underline"
+                >
+                  See reviews →
+                </a>
+              )}
+            </div>
+            {member.review_quote && (
+              <p className="mt-2 italic text-slate-600">
+                &ldquo;{member.review_quote}&rdquo;
+              </p>
+            )}
+          </div>
+        )}
+
         {member.photo_url && (
           // eslint-disable-next-line @next/next/no-img-element
           <img

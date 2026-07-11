@@ -6,7 +6,7 @@ import type { Member } from "@/lib/types";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const MODEL = process.env.CONCIERGE_MODEL || "claude-3-5-haiku-latest";
+const MODEL = process.env.CONCIERGE_MODEL || "claude-haiku-4-5";
 const REFERRED_BY = "Luca Bosurgi"; // BNI referral attribution
 
 type InMsg = { role: "user" | "assistant"; content: string };

@@ -6,7 +6,7 @@ import { createHash } from "crypto";
  */
 export function adminToken(): string {
   const secret = process.env.ADMIN_PASSWORD || "";
-  return createHash("sha256").update(`bni-winning-edge:${secret}`).digest("hex");
+  return createHash("sha256").update(`winning-edge-partners:${secret}`).digest("hex");
 }
 
 export function isAuthed(cookieValue?: string): boolean {

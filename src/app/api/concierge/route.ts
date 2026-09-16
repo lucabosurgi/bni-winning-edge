@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const MODEL = process.env.CONCIERGE_MODEL || "claude-haiku-4-5";
-const REFERRED_BY = "Luca Bosurgi"; // BNI referral attribution
+const REFERRED_BY = "Luca Bosurgi"; // referral attribution
 
 type InMsg = { role: "user" | "assistant"; content: string };
 
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     )
     .join("\n");
 
-  const system = `You are the friendly concierge for BNI Winning Edge, a chapter of local business professionals in Spring Hill, Florida.
+  const system = `You are the friendly concierge for Winning Edge Partners, a network of local business professionals in Spring Hill, Florida.
 
 Your job: understand what the visitor needs and route them to the RIGHT member(s) from the directory below. Rules:
 - ONLY recommend businesses that appear in the directory. Never invent a business or a member who isn't listed.

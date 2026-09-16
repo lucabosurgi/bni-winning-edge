@@ -6,7 +6,7 @@ import type { ChatMessage } from "@/lib/types";
 const GREETING: ChatMessage = {
   role: "assistant",
   content:
-    "Hi! I'm the BNI Winning Edge concierge. Tell me what you need — a plumber, a realtor, help planning an event — and I'll point you to the right member of our network.",
+    "Hi! I'm the Winning Edge Partners concierge. Tell me what you need — a plumber, a realtor, help planning an event — and I'll point you to the right member of our network.",
 };
 
 export default function Concierge() {

@@ -6,12 +6,12 @@ gets members invested.
 
 ---
 
-**Subject: Your free profile on our new BNI Winning Edge website**
+**Subject: Your free profile on our new Winning Edge Partners website**
 
 Hi **[First Name]**,
 
-We're building a brand-new website for BNI Winning Edge — a searchable directory
-where the public can find every member of our chapter, each with their own
+We're building a brand-new website for Winning Edge Partners — a searchable directory
+where the public can find every member of our network, each with their own
 dedicated page. It even has an AI "concierge" that points visitors to the right
 member when they need a trade, so it should send real referrals our way.
 

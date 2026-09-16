@@ -1,4 +1,4 @@
--- BNI Winning Edge — database schema
+-- Winning Edge Partners — database schema
 -- Run this in the Supabase SQL editor FIRST, then run seed.sql.
 
 -- ─────────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@ create table if not exists public.leads (
   request              text,          -- what the visitor needs, in their words
   recommended_member   uuid references public.members(id) on delete set null,
   recommended_business text,          -- denormalised for easy reporting
-  referred_by          text default 'Luca Bosurgi',  -- BNI referral attribution
+  referred_by          text default 'Luca Bosurgi',  -- referral attribution
   transcript           jsonb,         -- optional: full concierge conversation
   status               text not null default 'new'   -- new | passed_to_member | closed
 );

@@ -124,7 +124,7 @@ export default async function AdminPage() {
 
       <p className="mt-6 text-xs text-slate-400">
         All referrals are attributed to {leads[0]?.referred_by || "Luca Bosurgi"}{" "}
-        for BNI reporting. This page is private and excluded from search engines.
+        for referral reporting. This page is private and excluded from search engines.
       </p>
     </div>
   );

@@ -19,12 +19,12 @@ export async function generateMetadata({
   const member = await getMemberBySlug(params.slug);
   if (!member) return { title: "Member not found" };
   const desc =
-    member.description ?? `${member.business_name} — BNI Winning Edge member.`;
+    member.description ?? `${member.business_name} — Winning Edge Partners member.`;
   return {
     title: member.business_name,
     description: desc,
     openGraph: {
-      title: `${member.business_name} · BNI Winning Edge`,
+      title: `${member.business_name} · Winning Edge Partners`,
       description: desc,
       images: member.logo_url ? [member.logo_url] : undefined,
     },
@@ -66,7 +66,7 @@ export default async function MemberPage({
             href="/#directory"
             className="text-sm text-slate-500 hover:text-brand"
           >
-            ← BNI Winning Edge directory
+            ← Winning Edge Partners directory
           </Link>
 
           <div className="mt-6 flex items-center gap-5">
@@ -229,7 +229,7 @@ export default async function MemberPage({
         <div className="mt-8 rounded-2xl bg-brand/5 p-6 text-center">
           <p className="text-slate-700">
             {member.business_name} is a proud member of{" "}
-            <span className="font-semibold">BNI Winning Edge</span> — a trusted
+            <span className="font-semibold">Winning Edge Partners</span> — a trusted
             network of local professionals in Spring Hill, FL.
           </p>
           <Link

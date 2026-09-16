@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Concierge from "@/components/Concierge";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bniwinningedge.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://winningedgepartners.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "BNI Winning Edge — Trusted Local Businesses in Spring Hill, FL",
-    template: "%s · BNI Winning Edge",
+    default: "Winning Edge Partners — Trusted Local Businesses in Spring Hill, FL",
+    template: "%s · Winning Edge Partners",
   },
   description:
     "The trusted network of local business professionals in Spring Hill, Florida. Find a vetted, recommended member for whatever you need — or ask our concierge.",
   openGraph: {
-    siteName: "BNI Winning Edge",
+    siteName: "Winning Edge Partners",
     type: "website",
     url: siteUrl,
   },
@@ -35,7 +35,7 @@ export default function RootLayout({
                 WE
               </span>
               <span className="font-semibold leading-tight">
-                BNI Winning Edge
+                Winning Edge Partners
                 <span className="block text-xs font-normal text-white/70">
                   Spring Hill, Florida
                 </span>
@@ -60,11 +60,11 @@ export default function RootLayout({
         <footer className="mt-16 border-t border-slate-200 bg-white">
           <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">
             <p>
-              BNI Winning Edge is a chapter of Business Network International —
-              local professionals who refer real business to one another.
+              Winning Edge Partners is a network of trusted local professionals in
+              Spring Hill, Florida who refer real business to one another.
             </p>
             <p className="mt-2">
-              © {new Date().getFullYear()} BNI Winning Edge. Member logos and
+              © {new Date().getFullYear()} Winning Edge Partners. Member logos and
               photos are used with permission.
             </p>
             <p className="mt-2">

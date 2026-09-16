@@ -1,4 +1,4 @@
--- BNI Winning Edge — member seed data (generated; do not edit by hand)
+-- Winning Edge Partners — member seed data (generated; do not edit by hand)
 -- Regenerate with: node scripts/generate-seed.mjs
 -- Members are inserted with published = false (private until each one approves their assets).
 

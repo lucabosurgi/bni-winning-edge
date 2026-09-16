@@ -50,7 +50,7 @@ for (const m of members) {
 const sqlEsc = (s) => (s == null ? "" : String(s)).replace(/'/g, "''");
 
 // ---- seed.sql ----
-let sql = `-- BNI Winning Edge — member seed data (generated; do not edit by hand)
+let sql = `-- Winning Edge Partners — member seed data (generated; do not edit by hand)
 -- Regenerate with: node scripts/generate-seed.mjs
 -- Members are inserted with published = false (private until each one approves their assets).
 

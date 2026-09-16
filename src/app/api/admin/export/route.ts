@@ -43,7 +43,7 @@ export async function GET() {
   return new NextResponse(csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": 'attachment; filename="bni-winning-edge-leads.csv"',
+      "Content-Disposition": 'attachment; filename="winning-edge-partners-leads.csv"',
     },
   });
 }

@@ -5,9 +5,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // BNI-inspired neutral palette (not tied to Luca's personal brand)
+        // Neutral palette (not tied to Luca's personal brand)
         brand: {
-          DEFAULT: "#C8102E", // BNI red
+          DEFAULT: "#C8102E", // brand red
           dark: "#7A0C1E",
           ink: "#1B1F2A",
         },

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Your Listing — Winning Edge Partners</title>
+<style>
+  :root { --red:#C8102E; --navy:#1B2A4A; --ink:#222; }
+  body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f7f6f3;color:var(--ink);}
+  .bar{background:var(--navy);color:#fff;padding:16px 20px;}
+  .bar a{color:#fff;text-decoration:none;font-weight:bold;}
+  .wrap{max-width:720px;margin:28px auto 60px;padding:0 16px;}
+  h1{color:var(--navy);margin:0 0 6px;} .sub{color:#777;margin:0 0 26px;}
+  .card{background:#fff;border-radius:10px;padding:24px 26px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+  .label{font-size:12px;letter-spacing:1px;color:var(--red);text-transform:uppercase;font-weight:bold;margin:0 0 10px;}
+  .note{font-size:13px;color:#666;}
+  label{display:block;font-size:13px;font-weight:bold;color:var(--navy);margin:14px 0 5px;}
+  input[type=text], textarea, select{width:100%;box-sizing:border-box;border:1px solid #d9d5cd;border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;background:#fff;}
+  textarea{min-height:110px;resize:vertical;}
+  .btn{display:inline-block;background:var(--red);color:#fff;border:0;font-size:15px;font-weight:bold;padding:11px 22px;border-radius:8px;margin-top:16px;cursor:pointer;}
+  .btn:disabled{opacity:.6;cursor:default;}
+  #msg{margin-top:14px;font-size:14px;display:none;padding:12px 14px;border-radius:8px;}
+  #msg.ok{display:block;background:#eef7ee;color:#256029;}
+  #msg.err{display:block;background:#fdeeee;color:#8f1f2c;}
+</style>
+</head>
+<body>
+<div class="bar"><a href="/">&larr; Winning Edge Partners</a></div>
+<div class="wrap">
+  <h1>Your Listing</h1>
+  <p class="sub">Update your page, get listed as a new member, or ask about the premium page. Fill in the form and Luca will take care of the rest.</p>
+
+  <div class="card">
+    <p class="label">Send a request</p>
+    <form id="f">
+      <label for="type">What do you need?</label>
+      <select id="type">
+        <option value="update">Update my existing listing (phone, description, photo, etc.)</option>
+        <option value="join">I'm a new member — please add my listing</option>
+        <option value="upgrade">I'd like the premium page upgrade (paid extra)</option>
+      </select>
+      <label for="business">Business name</label>
+      <input type="text" id="business" placeholder="e.g. Sunshine Coast Plumbing">
+      <label for="name">Your name</label>
+      <input type="text" id="name" placeholder="First and last name">
+      <label for="contact">Email or phone</label>
+      <input type="text" id="contact" placeholder="Where can we reach you?">
+      <label for="message">Details</label>
+      <textarea id="message" placeholder="What should we change or add? For new members: your trade, a short description, phone, email and website."></textarea>
+      <button class="btn" id="send" type="submit">Send request</button>
+      <div id="msg"></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <p class="label">Want more than the basic listing?</p>
+    <p class="note">Every member gets a professional profile page free. If you want a <b>comprehensive premium page</b> — a full showcase of your products and services, with the site's <b>AI concierge trained on your business</b> so it can present you and answer visitors' questions about what you offer — that can be developed for you as a paid extra, arranged individually. Choose "premium page upgrade" in the form above, or talk to Luca Bosurgi directly: luca@mindfitnesslab.com &middot; (352) 675-2331.</p>
+  </div>
+</div>
+<script>
+document.getElementById('f').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  var btn = document.getElementById('send');
+  var msg = document.getElementById('msg');
+  msg.className = ''; msg.style.display = 'none';
+  btn.disabled = true; btn.textContent = 'Sending\u2026';
+  try {
+    var r = await fetch('/api/member-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: document.getElementById('type').value,
+        business: document.getElementById('business').value,
+        name: document.getElementById('name').value,
+        contact: document.getElementById('contact').value,
+        message: document.getElementById('message').value
+      })
+    });
+    var d = await r.json();
+    if (d.ok) {
+      msg.textContent = 'Got it! Your request is in \u2014 Luca will be in touch shortly.';
+      msg.className = 'ok';
+      document.getElementById('f').reset();
+    } else {
+      msg.textContent = d.error || 'Something went wrong \u2014 please email luca@mindfitnesslab.com.';
+      msg.className = 'err';
+    }
+  } catch (err) {
+    msg.textContent = 'Something went wrong \u2014 please email luca@mindfitnesslab.com.';
+    msg.className = 'err';
+  }
+  btn.disabled = false; btn.textContent = 'Send request';
+});
+</script>
+</body>
+</html>

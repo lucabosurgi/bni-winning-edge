@@ -6,6 +6,13 @@ const nextConfig = {
     // move everything into Supabase Storage.
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
+  async headers() {
+    // Let the spotlight widget on member sites read the member list.
+    return [{
+      source: "/widget/:path*",
+      headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
+    }];
+  },
   async rewrites() {
     // Serve the member badge kit page at a clean /kit URL.
     return [{ source: "/kit", destination: "/kit/index.html" }];

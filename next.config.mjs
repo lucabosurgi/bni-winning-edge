@@ -15,7 +15,10 @@ const nextConfig = {
   },
   async rewrites() {
     // Serve the member badge kit page at a clean /kit URL.
-    return [{ source: "/kit", destination: "/kit/index.html" }];
+    return [
+      { source: "/kit", destination: "/kit/index.html" },
+      { source: "/listing", destination: "/listing/index.html" },
+    ];
   },
 };
 

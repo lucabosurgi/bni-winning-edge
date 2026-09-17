@@ -6,6 +6,10 @@ const nextConfig = {
     // move everything into Supabase Storage.
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
+  async rewrites() {
+    // Serve the member badge kit page at a clean /kit URL.
+    return [{ source: "/kit", destination: "/kit/index.html" }];
+  },
 };
 
 export default nextConfig;

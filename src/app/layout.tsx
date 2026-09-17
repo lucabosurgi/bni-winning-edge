@@ -68,6 +68,10 @@ export default function RootLayout({
               photos are used with permission.
             </p>
             <p className="mt-2">
+              Members: <a href="/kit" className="underline hover:text-slate-700">get your badge kit</a>{" "}
+              &middot; <a href="/listing" className="underline hover:text-slate-700">update or add your listing</a>
+            </p>
+            <p className="mt-2">
               Design &amp; development by{" "}
               <a
                 href="https://lucabosurgi.com/mind-fitness-lab-design-and-development/"

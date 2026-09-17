@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { supabase, supabaseAdmin } from "@/lib/supabase";
+import { notifyLuca } from "@/lib/notify";
 import type { Member } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -177,6 +178,10 @@ async function saveLead(
       console.error("[concierge] saveLead:", error.message);
       return false;
     }
+    await notifyLuca(
+      "Winning Edge \u2014 NEW CONCIERGE LEAD",
+      `The site concierge captured a lead:\n\nVisitor: ${input.visitor_name || "(no name)"}\nContact: ${input.visitor_contact || "(none)"}\nNeeds: ${input.request || "(not stated)"}\nRecommended member: ${match?.business_name || "(none)"}\n\nAlso saved in winningedgepartners.com/admin`
+    );
     return true;
   } catch (e) {
     console.error("[concierge] saveLead threw:", e);

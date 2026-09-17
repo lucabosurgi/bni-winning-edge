@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { notifyLuca } from "@/lib/notify";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -63,6 +64,11 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
+
+  await notifyLuca(
+    `Winning Edge \u2014 ${label}`,
+    `New request from the website listing form:\n\nType: ${label}\nBusiness: ${business}\nName: ${name || "(not given)"}\nContact: ${contact}\n\nDetails:\n${message || "(no details given)"}\n\nAlso saved in winningedgepartners.com/admin`
+  );
 
   return NextResponse.json({ ok: true });
 }

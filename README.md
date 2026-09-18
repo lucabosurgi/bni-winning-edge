@@ -132,3 +132,4 @@ duplicates). Or just edit rows directly in the Supabase Table Editor.
 - The concierge is instructed to **only** recommend members in the live
   directory and never invent a business.
 
+<!-- deploy 2026-09-18 free-consult tracking -->

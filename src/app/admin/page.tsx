@@ -18,6 +18,34 @@ type Lead = {
   status: string | null;
 };
 
+type WidgetInstall = {
+  host: string;
+  first_seen: string;
+  last_seen: string;
+  hits: number;
+};
+
+type MemberSite = {
+  business_name: string;
+  website: string | null;
+};
+
+function matchMember(host: string, members: MemberSite[]) {
+  const norm = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/^https?:\/\//, "")
+      .replace(/^www\./, "")
+      .replace(/\/.*$/, "");
+  const h = host.replace(/^www\./, "");
+  const found = members.find((m) => {
+    if (!m.website) return false;
+    const w = norm(m.website);
+    return w === h || h.endsWith("." + w) || w.endsWith("." + h);
+  });
+  return found?.business_name ?? null;
+}
+
 function fmtDate(iso: string) {
   try {
     return new Date(iso).toLocaleString("en-US", {
@@ -49,6 +77,29 @@ export default async function AdminPage() {
   } catch (e) {
     loadError =
       "Could not connect to the database. Check SUPABASE_SERVICE_ROLE_KEY.";
+  }
+
+  let installs: WidgetInstall[] = [];
+  let memberSites: MemberSite[] = [];
+  let installsNote = "";
+  try {
+    const db = supabaseAdmin();
+    const { data, error } = await db
+      .from("widget_installs")
+      .select("*")
+      .order("last_seen", { ascending: false });
+    if (error) {
+      installsNote =
+        "Widget tracking is not active yet (the widget_installs table has not been created).";
+    } else {
+      installs = (data as WidgetInstall[]) ?? [];
+    }
+    const { data: mems } = await db
+      .from("members")
+      .select("business_name, website");
+    memberSites = (mems as MemberSite[]) ?? [];
+  } catch {
+    installsNote = "Could not load widget installs.";
   }
 
   return (
@@ -121,6 +172,65 @@ export default async function AdminPage() {
           </table>
         </div>
       )}
+
+      <div className="mt-12">
+        <h2 className="text-xl font-bold text-brand-ink">Widget installs</h2>
+        <p className="text-sm text-slate-500">
+          Member sites where the spotlight widget is live (updated every time the
+          widget loads on their site).
+        </p>
+        {installsNote && (
+          <p className="mt-4 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-700">
+            {installsNote}
+          </p>
+        )}
+        {installs.length === 0 && !installsNote ? (
+          <p className="mt-6 text-sm text-slate-500">
+            No widget activity yet. As soon as a member pastes the widget on their
+            site and it loads once, they appear here.
+          </p>
+        ) : installs.length > 0 ? (
+          <div className="mt-4 overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50 text-slate-500">
+                <tr>
+                  <th className="px-4 py-3 font-medium">Website</th>
+                  <th className="px-4 py-3 font-medium">Member</th>
+                  <th className="px-4 py-3 font-medium">First seen</th>
+                  <th className="px-4 py-3 font-medium">Last seen</th>
+                  <th className="px-4 py-3 font-medium">Loads</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {installs.map((w) => (
+                  <tr key={w.host}>
+                    <td className="px-4 py-3 font-medium text-brand-ink">
+                      <a
+                        href={"https://" + w.host}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:underline"
+                      >
+                        {w.host}
+                      </a>
+                    </td>
+                    <td className="px-4 py-3 text-slate-700">
+                      {matchMember(w.host, memberSites) || "—"}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-500">
+                      {fmtDate(w.first_seen)}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-500">
+                      {fmtDate(w.last_seen)}
+                    </td>
+                    <td className="px-4 py-3 text-slate-700">{w.hits}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : null}
+      </div>
 
       <p className="mt-6 text-xs text-slate-400">
         All referrals are attributed to {leads[0]?.referred_by || "Luca Bosurgi"}{" "}

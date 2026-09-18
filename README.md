@@ -131,3 +131,4 @@ duplicates). Or just edit rows directly in the Supabase Table Editor.
   can share it as their own. Swap the palette in `tailwind.config.ts`.
 - The concierge is instructed to **only** recommend members in the live
   directory and never invent a business.
+

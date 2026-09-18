@@ -71,6 +71,15 @@ export default function RootLayout({
               Members: <a href="/kit" className="underline hover:text-slate-700">get your badge kit</a>{" "}
               &middot; <a href="/listing" className="underline hover:text-slate-700">update or add your listing</a>
             </p>
+            <p className="mt-4 border-t border-slate-100 pt-4 text-slate-600">
+              Racing mind, stubborn habits, stress running the show?{" "}
+              <a
+                href="/members/mind-fitness-luca-bosurgi"
+                className="font-medium text-brand hover:underline"
+              >
+                Meet Luca Bosurgi, the network&apos;s own Mind Fitness Coach &rarr;
+              </a>
+            </p>
             <p className="mt-2">
               Design &amp; development by{" "}
               <a

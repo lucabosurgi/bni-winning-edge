@@ -26,6 +26,22 @@
     '<a href="' + HUB + '" style="display:inline-block;margin-top:8px;font-size:12px;color:#1B2A4A;font-weight:bold;text-decoration:none;">Meet all our trusted businesses &rarr;</a>';
   mount.appendChild(card);
 
+  // Anonymous install ping: records only this site's domain name on the hub,
+  // so the network can see which member sites have the widget active.
+  // No visitor data is collected or sent.
+  try {
+    var h = (location.hostname || "").toLowerCase();
+    if (
+      h &&
+      h !== "localhost" &&
+      h !== "127.0.0.1" &&
+      h.indexOf("winningedgepartners.com") === -1 &&
+      h.indexOf(".vercel.app") === -1
+    ) {
+      fetch(HUB + "/api/widget-ping?h=" + encodeURIComponent(h)).catch(function () {});
+    }
+  } catch (e) {}
+
   function show(members) {
     if (!members || !members.length) { document.getElementById("we-spot").style.display = "none"; return; }
     var i = Math.floor(Math.random() * members.length);

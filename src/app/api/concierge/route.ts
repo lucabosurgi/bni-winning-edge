@@ -154,7 +154,7 @@ ${directory || "(no members published yet)"}`;
 
 type Source = { via?: string; ref?: string };
 
-function hostOf(u?: string): string {
+function hostOf(u?: string | null): string {
   if (!u) return "";
   try {
     return new URL(u).hostname.toLowerCase().replace(/^www\./, "");

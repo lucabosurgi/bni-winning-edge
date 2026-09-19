@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { supabase, supabaseAdmin } from "@/lib/supabase";
-import { notifyLuca } from "@/lib/notify";
+import { notifyLuca, notifyEmail } from "@/lib/notify";
 import type { Member } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -218,6 +218,18 @@ async function saveLead(
       "Winning Edge \u2014 NEW CONCIERGE LEAD",
       `The site concierge captured a lead:\n\nVisitor: ${input.visitor_name || "(no name)"}\nContact: ${input.visitor_contact || "(none)"}\nNeeds: ${input.request || "(not stated)"}\nRecommended member: ${match?.business_name || "(none)"}\n\nCame in via: ${src.member?.business_name || src.domain || "(direct)"}\n\nAlso saved in winningedgepartners.com/admin`
     );
+    // Tell the member whose badge sent this visitor that they generated a
+    // referral. Deliberately NO visitor name or contact details here - only
+    // the member actually serving the lead should have those.
+    const srcEmail = src.member?.email;
+    if (srcEmail && src.member?.id !== match?.id) {
+      await notifyEmail(
+        srcEmail,
+        src.member?.contact_person || src.member?.business_name || "",
+        "Your badge just sent the network a referral",
+        `Good news.\n\nSomeone came to winningedgepartners.com from your website and asked for help. We've passed them to ${match?.business_name || "the right member"}.\n\nThat is a referral you generated without lifting a finger - the badge in your footer did it.\n\nLuca has the visitor's details and is following up. Bring it to the next meeting if you would like it counted.\n\n- Winning Edge Partners`
+      );
+    }
     return true;
   } catch (e) {
     console.error("[concierge] saveLead threw:", e);

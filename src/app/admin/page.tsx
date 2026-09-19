@@ -15,6 +15,8 @@ type Lead = {
   request: string | null;
   recommended_business: string | null;
   referred_by: string | null;
+  source_business: string | null;
+  source_domain: string | null;
   status: string | null;
 };
 
@@ -142,6 +144,7 @@ export default async function AdminPage() {
                 <th className="px-4 py-3 font-medium">Contact</th>
                 <th className="px-4 py-3 font-medium">Request</th>
                 <th className="px-4 py-3 font-medium">Referred to</th>
+                <th className="px-4 py-3 font-medium">Came from</th>
                 <th className="px-4 py-3 font-medium">Status</th>
               </tr>
             </thead>
@@ -160,6 +163,9 @@ export default async function AdminPage() {
                   <td className="px-4 py-3 text-slate-700">{l.request || "—"}</td>
                   <td className="px-4 py-3 text-slate-700">
                     {l.recommended_business || "—"}
+                  </td>
+                  <td className="px-4 py-3 text-slate-700">
+                    {l.source_business || l.source_domain || "—"}
                   </td>
                   <td className="px-4 py-3">
                     <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-600">
@@ -233,8 +239,9 @@ export default async function AdminPage() {
       </div>
 
       <p className="mt-6 text-xs text-slate-400">
-        All referrals are attributed to {leads[0]?.referred_by || "Luca Bosurgi"}{" "}
-        for referral reporting. This page is private and excluded from search engines.
+        “Came from” shows which member’s badge or website sent the visitor, where we could
+        tell — use it to credit them for the referral. This page is private and excluded from
+        search engines.
       </p>
     </div>
   );

@@ -9,6 +9,14 @@ const GREETING: ChatMessage = {
     "Hi! I'm the Winning Edge Partners concierge. Tell me what you need — a plumber, a realtor, help planning an event — and I'll point you to the right member of our network.",
 };
 
+function readSource(): { via?: string; ref?: string } {
+  try {
+    return JSON.parse(sessionStorage.getItem("we_src") ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
 export default function Concierge() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
@@ -19,6 +27,21 @@ export default function Concierge() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages, open]);
+
+  // Remember which member's badge sent this visitor, on the first page they
+  // land on — document.referrer is gone once they click around the site.
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("we_src")) return;
+      const via = new URLSearchParams(window.location.search).get("via") ?? "";
+      const ref = document.referrer || "";
+      if (via || ref) {
+        sessionStorage.setItem("we_src", JSON.stringify({ via, ref }));
+      }
+    } catch {
+      /* private mode - attribution is best effort */
+    }
+  }, []);
 
   async function send() {
     const text = input.trim();
@@ -34,7 +57,7 @@ export default function Concierge() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // Don't send the canned greeting to the model.
-        body: JSON.stringify({ messages: next.slice(1) }),
+        body: JSON.stringify({ messages: next.slice(1), source: readSource() }),
       });
       const data = await res.json();
       setMessages((m) => [

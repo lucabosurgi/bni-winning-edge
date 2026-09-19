@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     );
   }
 
-  let body: { messages?: InMsg[] };
+  let body: { messages?: InMsg[]; source?: Source };
   try {
     body = await req.json();
   } catch {
@@ -126,7 +126,7 @@ ${directory || "(no members published yet)"}`;
       const results: Anthropic.ToolResultBlockParam[] = [];
       for (const tu of toolUses) {
         if (tu.name === "capture_lead") {
-          const ok = await saveLead(tu.input as LeadInput, members);
+          const ok = await saveLead(tu.input as LeadInput, members, body.source);
           results.push({
             type: "tool_result",
             tool_use_id: tu.id,
@@ -152,6 +152,29 @@ ${directory || "(no members published yet)"}`;
   }
 }
 
+type Source = { via?: string; ref?: string };
+
+function hostOf(u?: string): string {
+  if (!u) return "";
+  try {
+    return new URL(u).hostname.toLowerCase().replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+// Which member's badge sent this visitor: an explicit ?via=<slug> on the badge
+// link first, otherwise the referring domain matched to a member's own site.
+function resolveSource(src: Source | undefined, members: Partial<Member>[]) {
+  const via = (src?.via ?? "").trim().toLowerCase().slice(0, 120);
+  let member = via ? members.find((m) => m.slug === via) : undefined;
+  const domain = hostOf(src?.ref);
+  if (!member && domain && !domain.endsWith("winningedgepartners.com")) {
+    member = members.find((m) => hostOf(m.website) === domain);
+  }
+  return { member, domain: domain || null };
+}
+
 type LeadInput = {
   visitor_name?: string;
   visitor_contact?: string;
@@ -161,26 +184,39 @@ type LeadInput = {
 
 async function saveLead(
   input: LeadInput,
-  members: Partial<Member>[]
+  members: Partial<Member>[],
+  source?: Source
 ): Promise<boolean> {
   try {
     const match = members.find((m) => m.slug === input.recommended_slug);
+    const src = resolveSource(source, members);
     const db = supabaseAdmin();
-    const { error } = await db.from("leads").insert({
+    const base = {
       visitor_name: input.visitor_name ?? null,
       visitor_contact: input.visitor_contact ?? null,
       request: input.request ?? null,
       recommended_member: match?.id ?? null,
       recommended_business: match?.business_name ?? null,
       referred_by: REFERRED_BY,
+    };
+    let { error } = await db.from("leads").insert({
+      ...base,
+      source_member: src.member?.id ?? null,
+      source_business: src.member?.business_name ?? null,
+      source_domain: src.domain,
     });
+    // If the source columns are ever missing, still save the lead.
+    if (error) {
+      console.error("[concierge] saveLead w/ source:", error.message);
+      ({ error } = await db.from("leads").insert(base));
+    }
     if (error) {
       console.error("[concierge] saveLead:", error.message);
       return false;
     }
     await notifyLuca(
       "Winning Edge \u2014 NEW CONCIERGE LEAD",
-      `The site concierge captured a lead:\n\nVisitor: ${input.visitor_name || "(no name)"}\nContact: ${input.visitor_contact || "(none)"}\nNeeds: ${input.request || "(not stated)"}\nRecommended member: ${match?.business_name || "(none)"}\n\nAlso saved in winningedgepartners.com/admin`
+      `The site concierge captured a lead:\n\nVisitor: ${input.visitor_name || "(no name)"}\nContact: ${input.visitor_contact || "(none)"}\nNeeds: ${input.request || "(not stated)"}\nRecommended member: ${match?.business_name || "(none)"}\n\nCame in via: ${src.member?.business_name || src.domain || "(direct)"}\n\nAlso saved in winningedgepartners.com/admin`
     );
     return true;
   } catch (e) {

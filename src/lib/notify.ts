@@ -7,8 +7,18 @@ const NOTIFY_TO = "luca@mindfitnesslab.com";
 const NOTIFY_FROM = { name: "Winning Edge Partners", email: "luca@mindfitnesslab.com" };
 
 export async function notifyLuca(subject: string, text: string): Promise<void> {
+  return notifyEmail(NOTIFY_TO, "Luca Bosurgi", subject, text);
+}
+
+/** Send a plain-text notification to any single recipient. */
+export async function notifyEmail(
+  to: string,
+  name: string,
+  subject: string,
+  text: string
+): Promise<void> {
   const key = process.env.BREVO_API_KEY;
-  if (!key) return;
+  if (!key || !to) return;
   try {
     const res = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
@@ -19,7 +29,7 @@ export async function notifyLuca(subject: string, text: string): Promise<void> {
       },
       body: JSON.stringify({
         sender: NOTIFY_FROM,
-        to: [{ email: NOTIFY_TO, name: "Luca Bosurgi" }],
+        to: [{ email: to, name }],
         subject,
         textContent: text,
       }),

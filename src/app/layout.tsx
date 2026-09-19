@@ -93,6 +93,11 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+
+        {/* Vercel Web Analytics. Loaded as a plain tag rather than via
+            @vercel/analytics so the three static pages in /public can use
+            the exact same script. */}
+        <script defer src="/_vercel/insights/script.js" />
       </body>
     </html>
   );

@@ -133,3 +133,10 @@ duplicates). Or just edit rows directly in the Supabase Table Editor.
   directory and never invent a business.
 
 <!-- deploy 2026-09-18 free-consult tracking -->
+
+## Analytics
+
+Vercel Web Analytics is enabled on the project (plan-included tier). The
+collector loads as a plain /_vercel/insights/script.js tag from the root layout
+and from the three static pages under public/ (gold-mine.html, kit, listing),
+which the Next app never mounts on.

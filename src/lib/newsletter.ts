@@ -1,5 +1,5 @@
 /**
- * "Thoughts & Facts about the Mind" — Luca's weekly educational newsletter.
+ * "Monday Food for the Mind" — Luca's weekly educational newsletter.
  *
  * One blog post per issue, newest → oldest, sent through Brevo to the
  * dedicated newsletter list. Everything here is server-only.
@@ -12,7 +12,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export const NEWSLETTER_LIST_ID = Number(process.env.NEWSLETTER_LIST_ID || 6);
-export const NEWSLETTER_NAME = "Thoughts & Facts about the Mind";
+export const NEWSLETTER_NAME = "Monday Food for the Mind";
 export const BLOG_API = "https://lucabosurgi.com/wp-json/wp/v2/posts";
 export const SIGNUP_URL =
   "https://d223c623.sibforms.com/serve/MUIFABMfNviNDxFPO7D0T0ZsocY0g28umx0LQJm_58OwCXZJ3rs9W4ZEVFBtBJf2YohvQAMloWdGHTZlsFVKIOzwvU1OP8KSXjojKcj9dlDRJInllnwzCwlMrwfEN-p8XK2ZlP2lxTanbWyE2uCwOXG5WnofcT4k8LtouutLalDKRvE6sxLA1Td9wPhgpKg7YRXglC0ir2DA4at1gA==";
@@ -200,11 +200,11 @@ ${hero ? `<tr><td style="padding:0 36px">${`<table role="presentation" width="10
   <a href="${esc(post.link)}" style="display:inline-block;background:#2f6f5e;color:#ffffff;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:bold;padding:13px 22px;border-radius:6px">Read the full article →</a>
 </td></tr>
 <tr><td style="padding:0 36px 30px 36px;font-size:16px;line-height:25px;color:#333">
-  <p style="margin:0 0 6px 0">Until next week — be the captain of your mind, not its passenger.</p>
+  <p style="margin:0 0 6px 0">Until next Monday — be the captain of your mind, not its passenger.</p>
   <p style="margin:0">Luca Bosurgi<br><span style="font-size:14px;color:#777;font-family:Helvetica,Arial,sans-serif">Master Hypnotist &amp; Mind Fitness Coach · Mind Fitness Lab, Spring Hill, Florida</span></p>
 </td></tr>
 <tr><td style="padding:20px 36px 26px 36px;border-top:1px solid #eee;font-family:Helvetica,Arial,sans-serif;font-size:12px;line-height:19px;color:#888">
-  <p style="margin:0 0 10px 0">Know someone who would enjoy one thoughtful read a week about the mind? Forward this email — they can <a href="${esc(SIGNUP_URL)}" style="color:#2f6f5e">subscribe here</a>.</p>
+  <p style="margin:0 0 10px 0">Know someone who would enjoy one thoughtful read every Monday about the mind? Forward this email — they can <a href="${esc(SIGNUP_URL)}" style="color:#2f6f5e">subscribe here</a>.</p>
   <p style="margin:0 0 10px 0">You receive this because you are a client, a friend, or a fellow member of Luca's business network.</p>
   <p style="margin:0">
     <a href="${unsubscribeUrl()}" style="color:#2f6f5e">Unsubscribe from this weekly newsletter only</a> &nbsp;·&nbsp;
@@ -234,7 +234,7 @@ export async function sendIssue(post: Post, s: Summary, html: string, issueNo: n
   const created = await brevo("/emailCampaigns", {
     method: "POST",
     json: {
-      name: `TFM #${issueNo} — ${post.title}`.slice(0, 200),
+      name: `MFM #${issueNo} — ${post.title}`.slice(0, 200),
       subject: s.subject,
       previewText: s.intro.slice(0, 150),
       sender: SENDER,

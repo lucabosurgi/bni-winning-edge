@@ -1,4 +1,4 @@
--- Weekly newsletter "Thoughts & Facts about the Mind" — one row per issue sent.
+-- Weekly newsletter "Monday Food for the Mind" — one row per issue sent.
 -- Run once in the Supabase SQL editor (project "BNI website").
 create table if not exists public.newsletter_issues (
   post_id     bigint primary key,          -- WordPress post id on lucabosurgi.com

@@ -201,7 +201,7 @@ ${hero ? `<tr><td style="padding:0 36px">${`<table role="presentation" width="10
 </td></tr>
 <tr><td style="padding:0 36px 30px 36px;font-size:16px;line-height:25px;color:#333">
   <p style="margin:0 0 6px 0">Until next Monday — be the captain of your mind, not its passenger.</p>
-  <p style="margin:0">Luca Bosurgi<br><span style="font-size:14px;color:#777;font-family:Helvetica,Arial,sans-serif">Master Hypnotist &amp; Mind Fitness Coach · Mind Fitness Lab, Spring Hill, Florida</span></p>
+  <p style="margin:0">Luca Bosurgi<br><span style="font-size:14px;color:#777;font-family:Helvetica,Arial,sans-serif">Master Hypnotist &amp; Mind Fitness Coach · Mind Fitness Lab, Spring Hill, Florida<br><a href="https://lucabosurgi.com" style="color:#2f6f5e;text-decoration:none">lucabosurgi.com</a> — more articles, books and the thinking behind this newsletter</span></p>
 </td></tr>
 <tr><td style="padding:20px 36px 26px 36px;border-top:1px solid #eee;font-family:Helvetica,Arial,sans-serif;font-size:12px;line-height:19px;color:#888">
   <p style="margin:0 0 10px 0">Know someone who would enjoy one thoughtful read every Monday about the mind? Forward this email — they can <a href="${esc(SIGNUP_URL)}" style="color:#2f6f5e">subscribe here</a>.</p>
@@ -210,7 +210,7 @@ ${hero ? `<tr><td style="padding:0 36px">${`<table role="presentation" width="10
     <a href="${unsubscribeUrl()}" style="color:#2f6f5e">Unsubscribe from this weekly newsletter only</a> &nbsp;·&nbsp;
     <a href="{{ unsubscribe }}" style="color:#888">Unsubscribe from all Mind Fitness Lab emails</a>
   </p>
-  <p style="margin:10px 0 0 0">Mind Fitness Lab · 5331 Commercial Way, Suite 204, Spring Hill, FL 34606</p>
+  <p style="margin:10px 0 0 0">Mind Fitness Lab · 5331 Commercial Way, Suite 204, Spring Hill, FL 34606 · <a href="https://lucabosurgi.com" style="color:#888">lucabosurgi.com</a></p>
 </td></tr>
 </table></td></tr></table>
 </body></html>`;
